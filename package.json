@@ -6,6 +6,7 @@
   "author": "Jamie Garner <jamiegarner123@hotmail.co.uk>",
   "license": "MIT",
   "dependencies": {
+    "mongoose": "^4.12.0",
     "yahoo-finance": "^0.3.3"
   }
 }
