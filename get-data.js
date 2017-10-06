@@ -20,7 +20,7 @@ const SP500Tickers = require("./tickers/s&p500").tickers2;
     Amount
 
   db.stocks.insert( { ticker: "AAPL", dividends: 15 } )
-
+ 
 */
 
 db.stocks.insert({ ticker: "AAPL", dividends: [], region: "", country: "" });
