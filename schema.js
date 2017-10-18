@@ -3,8 +3,8 @@ var {
 	GraphQLID,
 	GraphQLString,
 	GraphQLList,
-    GraphQLSchema,
-    GraphQLNonNull
+	GraphQLSchema,
+	GraphQLNonNull
 } = require("graphql");
 
 var STOCK_DATA = [
@@ -36,7 +36,7 @@ var StockType = new GraphQLObjectType({
 });
 
 var QueryType = new GraphQLObjectType({
-	name: "Query",
+	name: "Stocks",
 	fields: () => ({
 		stocks: {
 			type: new GraphQLList(StockType),
@@ -61,8 +61,9 @@ var MutationType = new GraphQLObjectType({
 			},
 			resolve: (root, args) => {
 				return {
+					id: 4,
 					ticker: args.ticker,
-					counter: "USA"
+					country: "USA"
 				};
 			}
 		}

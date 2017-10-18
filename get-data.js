@@ -1,30 +1,6 @@
 const yahooFinance = require("yahoo-finance");
 const SP500Tickers = require("./tickers/s&p500").tickers2;
 
-/*
-  Stocks
-    Ticker       - AAPL|ETC
-    Dividends    - Dividend[]
-    RegionId     - 1
-    CountryId    - 1
-
-  Regions
-    Europe|America
-
-  Countries
-    UK|Germany
-
-  Dividend
-    Ticker
-    Date
-    Amount
-
-  db.stocks.insert( { ticker: "AAPL", dividends: 15 } )
- 
-*/
-
-db.stocks.insert({ ticker: "AAPL", dividends: [], region: "", country: "" });
-
 const stocks = [
 	{
 		ticker: "AAPL",
@@ -44,7 +20,7 @@ function getDividendHistoryForStock(ticker) {
 		const sorted = entries.sort((a, b) => {
 			return new Date(a.date) - new Date(b.date);
 		});
-		entries.map(entry => console.log(entry.dividends));
+		entries.map(entry => console.log(entry));
 	});
 }
 
