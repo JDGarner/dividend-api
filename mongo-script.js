@@ -4,20 +4,23 @@ var ObjectId = require("mongodb").ObjectID;
 var url = "mongodb://localhost:27017/finance";
 
 function insertDocument(stock, db, callback) {
-	db.collection("stocks").insertOne(stock,
-	function(err, result) {
+	db.collection("stocks").insertOne(stock, function(err, result) {
 		assert.equal(err, null);
-		console.log("Inserted a document into the stocks collection.");
+		console.log("Added document.");
 		callback();
 	});
-};
+}
 
 function addToDB(stock) {
-	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
-		insertDocument(stock, db, function() {
-			db.close();
-		});
+	// MongoClient.connect(url, function(err, db) {
+	// 	assert.equal(null, err);
+	// 	insertDocument(stock, db, function() {
+	// 		db.close();
+	// 	});
+	// });
+
+	db.collection("stocks").insertOne(stock, function(err, result) {
+		assert.equal(err, null);
 	});
 }
 
@@ -32,19 +35,19 @@ function getDividendHistoryForStock(ticker) {
 		period: "v"
 	};
 
-	yahooFinance.historical(options).then(entries => {
+	return yahooFinance.historical(options).then(entries => {
 		const sorted = entries.sort((a, b) => {
 			return new Date(a.date) - new Date(b.date);
 		});
 		const stock = {
 			ticker
-		}
+		};
 
 		stock.dividends = entries.map(entry => {
 			return {
 				date: entry.date,
 				dividend: entry.dividends
-			}
+			};
 			// console.log(entry);
 		});
 
@@ -52,7 +55,18 @@ function getDividendHistoryForStock(ticker) {
 	});
 }
 
-// SP500Tickers.map((ticker) => {
-//   getDividendHistoryForStock(ticker);
-// });
-getDividendHistoryForStock("AAPL");
+MongoClient.connect(url, function(err, db) {
+	assert.equal(null, err);
+	let pendingWork;
+
+	SP500Tickers.map(ticker => {
+		pendingWork = getDividendHistoryForStock(ticker);
+	});
+	pendingWork.then()
+
+	insertDocument(stock, db, function() {
+		db.close();
+	});
+});
+
+// getDividendHistoryForStock("AAPL");
