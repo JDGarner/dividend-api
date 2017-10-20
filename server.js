@@ -2,10 +2,10 @@
 var graphql = require("graphql").graphql;
 var express = require("express");
 var expressGraphQL = require("express-graphql");
-var schema = require("./schema");
+var schema = require("./api/schema");
 
 // This is just an internal test
-var query = "query { stocks { id, ticker, country } }";
+var query = "query { stocks { _id, ticker } }";
 graphql(schema, query).then(function(result) {
 	console.log(JSON.stringify(result, null, " "));
 });
